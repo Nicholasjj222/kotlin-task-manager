@@ -1,0 +1,97 @@
+import java.io.File
+import java.util.*
+
+data class Note(
+    val id: Int,
+    val content: String
+)
+
+class NoteManager {
+
+    private val notes = mutableListOf<Note>()
+    private var idCounter = 1
+    private val file = File("notes.txt")
+
+    fun addNote(content: String) {
+        val note = Note(idCounter++, content)
+        notes.add(note)
+        println("Note added: ${note.content}")
+    }
+
+    fun listNotes() {
+        if (notes.isEmpty()) {
+            println("No notes available.")
+            return
+        }
+
+        println("\n=== Notes ===")
+        notes.forEach {
+            println("${it.id}. ${it.content}")
+        }
+    }
+
+    fun saveToFile() {
+        val data = notes.joinToString("\n") { "${it.id}|${it.content}" }
+        file.writeText(data)
+        println("Notes saved to file.")
+    }
+
+    fun loadFromFile() {
+        if (!file.exists()) {
+            println("No saved notes found.")
+            return
+        }
+
+        notes.clear()
+
+        file.readLines().forEach {
+            val parts = it.split("|")
+            if (parts.size == 2) {
+                val id = parts[0].toInt()
+                val content = parts[1]
+                notes.add(Note(id, content))
+                if (id >= idCounter) idCounter = id + 1
+            }
+        }
+
+        println("Notes loaded from file.")
+    }
+}
+
+fun main() {
+    val scanner = Scanner(System.`in`)
+    val manager = NoteManager()
+
+    manager.loadFromFile()
+
+    while (true) {
+        println(
+            """
+            === Notes Manager ===
+            1. Add Note
+            2. View Notes
+            3. Save Notes
+            4. Exit
+        """.trimIndent()
+        )
+
+        print("Choose option: ")
+        val choice = scanner.nextLine()
+
+        when (choice) {
+            "1" -> {
+                print("Enter note: ")
+                val note = scanner.nextLine()
+                manager.addNote(note)
+            }
+            "2" -> manager.listNotes()
+            "3" -> manager.saveToFile()
+            "4" -> {
+                manager.saveToFile()
+                println("Exiting...")
+                break
+            }
+            else -> println("Invalid option")
+        }
+    }
+}
