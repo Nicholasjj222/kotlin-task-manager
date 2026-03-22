@@ -5,7 +5,7 @@ data class Note(
     val id: Int,
     val content: String
 )
-
+take a new class and repo
 class NoteManager {
 
     private val notes = mutableListOf<Note>()
@@ -74,7 +74,7 @@ fun main() {
             4. Exit
         """.trimIndent()
         )
-
+turn a extra trim
         print("Choose option: ")
         val choice = scanner.nextLine()
 
