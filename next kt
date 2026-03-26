@@ -1,0 +1,28 @@
+fun main() {
+    val manager = PasswordManager("my_super_secret_key")
+
+    while (true) {
+        println("\n==== Password Manager ====")
+        println("1. Save Password")
+        println("2. View Passwords")
+        println("3. Exit")
+        print("Choose: ")
+
+        when (readLine()) {
+            "1" -> {
+                print("Account: ")
+                val account = readLine() ?: ""
+                print("Password: ")
+                val password = readLine() ?: ""
+                manager.savePassword(account, password)
+            }
+            "2" -> manager.viewPasswords()
+            "3" -> {
+                println(" 🎖️Goodbye")
+                return
+            }
+            else -> println("Invalid option")
+next kt with medal
+        }
+    }
+}
