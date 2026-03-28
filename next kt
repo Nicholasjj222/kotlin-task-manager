@@ -18,7 +18,7 @@ fun main() {
             }
             "2" -> manager.viewPasswords()
             "3" -> {
-                println(" 🎖️Goodbye")
+                println(" so Goodbye")
                 return
             }
             else -> println("Invalid option")
