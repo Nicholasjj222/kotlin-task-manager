@@ -1,0 +1,13 @@
+package com.example.demo.model
+
+import jakarta.persistence.*
+
+@Entity
+data class Color(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0,
+
+    val name: String,
+    val hexCode: String
+)
