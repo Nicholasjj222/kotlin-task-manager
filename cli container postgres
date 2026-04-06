@@ -1,0 +1,46 @@
+-- =========================================
+--  Color System Database
+-- =========================================
+
+CREATE DATABASE colorsystem;
+
+-- Use database
+\c colorsystem;
+
+-- =========================================
+-- Table: palettes
+-- =========================================
+CREATE TABLE palettes (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =========================================
+-- Table: colors
+-- =========================================
+CREATE TABLE colors (
+    id SERIAL PRIMARY KEY,
+    palette_id INT REFERENCES palettes(id) ON DELETE CASCADE,
+    name VARCHAR(50),
+    hex_code VARCHAR(7) NOT NULL, -- e.g. #FF5733
+    rgb_value VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =========================================
+-- Sample Data
+-- =========================================
+
+INSERT INTO palettes (name, description)
+VALUES 
+('Dark Mode', 'Dark UI color palette'),
+('Light Mode', 'Light UI color palette');
+
+INSERT INTO colors (palette_id, name, hex_code, rgb_value)
+VALUES
+(1, 'Background', '#121212', '18,18,18'),
+(1, 'Primary', '#BB86FC', '187,134,252'),
+(2, 'Background', '#FFFFFF', '255,255,255'),
+(2, 'Primary', '#6200EE', '98,0,238');
